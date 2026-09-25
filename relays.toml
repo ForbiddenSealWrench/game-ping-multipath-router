@@ -1,0 +1,35 @@
+# Community relays: volunteers who run shortcut-relay for everyone.
+#
+# Shortcut fetches this file from the repo and uses it only when the signature
+# checks out against the key built into the app, so nobody can slip a relay in
+# on the way. To add yours, set one up with relay/cloud-init.yaml and open a
+# pull request. Maintainers re-sign the list after a week of good uptime.
+#
+# A relay forwards only UDP, only to the one public address each session
+# registered, at up to 1 Mbit/s a session. It can't carry web traffic and
+# can't be used as an open proxy. That's what makes it safe to run one.
+
+[list]
+version = 14
+updated = 2026-10-28
+key = "shortcut-relays-2026"   # which of the app's built-in keys signed it
+signature = "ed25519:79Ill0a0HV+b17YqNG50ryJLIEbH0O6bD3GClFBihvlGV5ePOXw0FLSvKvgX2gVjs+PEArVc9kL/JEaxgCwydw=="   # over the relay array below, as written
+
+relay = [
+  { id = "waw-1", city = "Warsaw",    country = "PL", addr = "203.0.113.11:7400",  operator = "petrichor" },
+  { id = "vie-1", city = "Vienna",    country = "AT", addr = "203.0.113.38:7400",  operator = "korund" },
+  { id = "fra-1", city = "Frankfurt", country = "DE", addr = "203.0.113.52:7400",  operator = "larkspur" },
+  { id = "fra-2", city = "Frankfurt", country = "DE", addr = "203.0.113.24:7400",  operator = "nightjar" },
+  { id = "ams-1", city = "Amsterdam", country = "NL", addr = "203.0.113.67:7400",  operator = "tidewater" },
+  { id = "par-1", city = "Paris",     country = "FR", addr = "203.0.113.90:7400",  operator = "lumen" },
+  { id = "lon-1", city = "London",    country = "GB", addr = "198.51.100.14:7400", operator = "halyard" },
+  { id = "mil-1", city = "Milan",     country = "IT", addr = "198.51.100.41:7400", operator = "fennel" },
+  { id = "sto-1", city = "Stockholm", country = "SE", addr = "198.51.100.73:7400", operator = "brisk" },
+  { id = "mad-1", city = "Madrid",    country = "ES", addr = "198.51.100.88:7400", operator = "sirocco" },
+  { id = "ash-1", city = "Ashburn",   country = "US", addr = "192.0.2.17:7400",    operator = "cordwood" },
+  { id = "ash-2", city = "Ashburn",   country = "US", addr = "192.1.3.99:7400",    operator = "bramble" },
+  { id = "chi-1", city = "Chicago",   country = "US", addr = "192.1.3.96:7400",    operator = "lakeshore" },
+  { id = "dal-1", city = "Dallas",    country = "US", addr = "192.0.2.58:7400",    operator = "mesquite" },
+  { id = "sao-1", city = "São Paulo", country = "BR", addr = "192.0.2.83:7400",    operator = "garoa" },
+  { id = "sgp-1", city = "Singapore", country = "SG", addr = "192.0.2.104:7400",   operator = "monsoon" },
+]

@@ -1,0 +1,34 @@
+# Games Shortcut knows, by the process name they ship with on Windows.
+# There are no server lists: Shortcut learns the server from the game's own
+# UDP traffic once a match starts.
+#
+# routing = "valve"  Valve already carries this game over its own relay network.
+#                    Shortcut measures it anyway, and says so when direct is best.
+# routing = "tcp"    The game talks TCP. Shortcut gives the verdict, but only
+#                    reroutes UDP.
+# routing = "p2p"    Peer-to-peer lobbies with no single server. Verdict only.
+#
+# `# verify` marks a process name worth checking after a big game update.
+
+game = [
+  { name = "VALORANT", exe = ["VALORANT-Win64-Shipping.exe"] },
+  { name = "Counter-Strike 2", exe = ["cs2.exe"], routing = "valve" },
+  { name = "Dota 2", exe = ["dota2.exe"], routing = "valve" },
+  { name = "League of Legends", exe = ["League of Legends.exe"] },
+  { name = "Fortnite", exe = ["FortniteClient-Win64-Shipping.exe"] },
+  { name = "Apex Legends", exe = ["r5apex.exe", "r5apex_dx12.exe"] },                   # verify
+  { name = "Call of Duty", exe = ["cod.exe"] },                                        # verify
+  { name = "Overwatch 2", exe = ["Overwatch.exe"] },
+  { name = "Rainbow Six Siege", exe = ["RainbowSix.exe", "RainbowSix_Vulkan.exe"] },   # verify
+  { name = "PUBG: Battlegrounds", exe = ["TslGame.exe"] },
+  { name = "Rust", exe = ["RustClient.exe"] },
+  { name = "Roblox", exe = ["RobloxPlayerBeta.exe"] },
+  { name = "Minecraft", exe = ["Minecraft.Windows.exe"] },        # Bedrock. Java edition talks TCP
+  { name = "GTA Online", exe = ["GTA5.exe", "GTA5_Enhanced.exe"], routing = "p2p" },   # verify
+  { name = "EA Sports FC", exe = ["FC26.exe", "FC27.exe"] },                           # verify, renamed yearly
+  { name = "Marvel Rivals", exe = ["Marvel-Win64-Shipping.exe"] },                     # verify
+  { name = "Deadlock", exe = ["deadlock.exe"], routing = "valve" },
+  { name = "Dead by Daylight", exe = ["DeadByDaylight-Win64-Shipping.exe"] },
+  { name = "Rocket League", exe = ["RocketLeague.exe"] },
+  { name = "World of Warcraft", exe = ["Wow.exe", "WowClassic.exe"], routing = "tcp" },
+]

@@ -1,0 +1,67 @@
+#cloud-config
+# shortcut-relay on a fresh Ubuntu 24.04 or Oracle Linux 9 VM, Arm or x86.
+#
+# Shortcut's relay wizard passes this file as the VM's user data. On any other
+# cloud, paste it into the user-data field yourself, then add the relay in
+# Shortcut by its address.
+#
+# It builds the relay from this repo's source, runs it as a locked-down
+# systemd service and opens one UDP port. Nothing else listens. The cloud's own
+# firewall must allow UDP 7400 too (an OCI security list, an AWS security
+# group). The wizard adds that rule for Oracle Cloud.
+
+package_update: true
+packages: [git, gcc]
+
+write_files:
+  - path: /etc/shortcut-relay.conf
+    content: |
+      name = "my-relay"
+      listen = "0.0.0.0:7400"
+      max_sessions = 64
+      rate_kbit = 1000          # per session; a shooter needs about 250
+
+  - path: /etc/systemd/system/shortcut-relay.service
+    content: |
+      [Unit]
+      Description=Shortcut relay
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      ExecStart=/usr/local/bin/shortcut-relay /etc/shortcut-relay.conf
+      DynamicUser=yes
+      NoNewPrivileges=yes
+      ProtectSystem=strict
+      ProtectHome=yes
+      PrivateTmp=yes
+      PrivateDevices=yes
+      RestrictAddressFamilies=AF_INET AF_INET6
+      MemoryMax=64M
+      Restart=always
+      RestartSec=2
+
+      [Install]
+      WantedBy=multi-user.target
+
+  - path: /usr/local/sbin/shortcut-relay-setup
+    permissions: "0755"
+    content: |
+      #!/bin/bash
+      set -euo pipefail
+      export HOME=/root
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+      git clone --depth 1 --branch 1.3.9 https://github.com/ForbiddenSealWrench/game-ping-multipath-router.git /opt/shortcut
+      cd /opt/shortcut && "$HOME/.cargo/bin/cargo" build --release -p shortcut-relay
+      install -m 0755 target/release/shortcut-relay /usr/local/bin/shortcut-relay
+      # Open UDP 7400 in the VM's own firewall, whichever one the image uses.
+      if command -v firewall-cmd >/dev/null; then
+        firewall-cmd --permanent --add-port=7400/udp && firewall-cmd --reload
+      elif [ -f /etc/iptables/rules.v4 ]; then
+        iptables -I INPUT -p udp --dport 7400 -j ACCEPT && netfilter-persistent save
+      fi
+      systemctl daemon-reload
+      systemctl enable --now shortcut-relay
+
+runcmd:
+  - [/usr/local/sbin/shortcut-relay-setup]

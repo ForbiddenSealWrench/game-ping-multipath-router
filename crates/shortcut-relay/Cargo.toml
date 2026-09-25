@@ -1,0 +1,11 @@
+[package]
+name = "shortcut-relay"
+description = "A small UDP relay for Shortcut. Forwards one game's packets, to one server, at game rate"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+
+[dependencies]
+shortcut-core = { path = "../shortcut-core" }

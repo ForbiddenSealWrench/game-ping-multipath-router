@@ -1,0 +1,10 @@
+[workspace]
+members = ["crates/shortcut-core", "crates/shortcut-relay"]
+resolver = "2"
+
+[workspace.package]
+version = "1.4.1"
+edition = "2024"
+license = "MIT"
+rust-version = "1.85"
+repository = "https://github.com/ForbiddenSealWrench/game-ping-multipath-router"
