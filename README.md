@@ -134,3 +134,7 @@ Same trick, no subscription. They pay for servers and charge you. Shortcut runs 
 Shortcut is [MIT](LICENSE) licensed. The UI prefers the system font where it has one (SF Pro on Apple devices) and bundles Inter and Geist Mono, both under the SIL Open Font License 1.1.
 
 ExitLag, NoPing and Oracle Cloud are named for comparison or as an option only. Game names are trademarks of their owners. Shortcut isn't affiliated with any of them.
+
+---
+
+Reviewed with [Claude](https://claude.ai) — the AI assistant from Anthropic.
